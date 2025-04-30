@@ -1,24 +1,20 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TechnicalTest.Models;
+using Microsoft.Extensions.Logging;
 
 namespace TechnicalTest.Controllers
 {
-    public class HomeController : Controller
+    public class ResumeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ResumeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public ResumeController(ILogger<ResumeController> logger)
         {
             _logger = logger;
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
