@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "Prueba almacenado";
+}
+@model TechnicalTest.ViewModels.SuscriptorsViewModel
+
+
+<h3>Suscribirme</h3>
+<form method="post" asp-action="Suscribirme" asp-controller="Suscriptors">
+    <div class="mb-3">
+        <label for="Nombre" class="form-label">Nombre:</label>
+        <input type="text" class="form-control" id="Nombre" name="Nombre" required />
+    </div>
+    <button type="submit" class="btn btn-success">Suscribirme</button>
+</form>
+
+<hr />
+
+<h2>Lista de Suscriptores</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Lista)
+        {
+            <tr>
+                <td>@s.Id</td>
+                <td>@s.Nombre</td>
+                <td>
+                    <form asp-action="Eliminar" method="post" asp-controller="Suscriptors" asp-route-id="@s.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!string.IsNullOrEmpty(Model.Error))
+{
+    <div class="alert alert-danger mt-3">@Model.Error</div>
+}
+
+<h1>Buscar Suscriptor</h1>
+
+<form method="post" asp-action="Buscar" asp-controller="Suscriptors">
+    <div class="form-group">
+        <label for="id">Ingrese ID:</label>
+        <input type="number" id="id" name="id" value="@Model?.IdBuscado" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+</form>
+
+@if (Model.Resultado != null && !string.IsNullOrEmpty(Model.Resultado.Nombre))
+{
+    <div class="alert alert-success mt-3">
+        <strong>Resultado:</strong>
+        <ul>
+            <li><strong>ID:</strong> @Model.Resultado.Id</li>
+            <li><strong>Nombre:</strong> @Model.Resultado.Nombre</li>
+        </ul>
+    </div>
+}
+else if (Model.IdBuscado != null)
+{
+    <div class="alert alert-warning mt-3">
+        No se encontró ningún suscriptor con el ID <strong>@Model.IdBuscado</strong>.
+    </div>
+}
